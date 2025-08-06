@@ -1,0 +1,6 @@
+<h2>Résumé des voyages</h2>
+<div class="summary-card">
+  <p><strong>Distance totale :</strong> {{ result.distanceKm }} km</p>
+  <p><strong>Consommation moyenne :</strong> {{ result.consommationPour100Km | number:'1.2-2' }} L</p>
+  <p><strong>Émissions CO2 :</strong> {{ result.quantiteCO2Totale | number:'1.2-2' }} kg</p>
+</div>

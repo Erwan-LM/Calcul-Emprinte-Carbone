@@ -1,0 +1,70 @@
+<section class="carbon-footprint-container">
+    <h1>Empreinte carbone de vos trajets</h1>
+  
+    <div class="stats-grid">
+      <div class="stat">
+        <label>Consommation totale :</label>
+        <span>{{ (consommationPour100Km * distanceKm / 100) | number: '1.2-2' }} L</span>
+      </div>
+  
+      <div class="stat" [ngClass]="{
+        'alert-distance': distanceKm > 500,
+        'success-distance': distanceKm < 100
+      }">
+        <label>Distance totale :</label>
+        <span>{{ distanceKm }} km</span>
+      </div>
+  
+      <div class="stat" [style.color]="
+        consommationPour100Km > 7 ? 'red' :
+        consommationPour100Km < 4 ? 'green' : 'black'
+      ">
+        <label>Consommation pour 100 km :</label>
+        <span>{{ consommationPour100Km | number: '1.2-2' }} L</span>
+      </div>
+  
+      <div class="stat">
+        <label>Quantité totale de CO2 :</label>
+        <span>{{ quantiteCO2Totale | number: '1.2-2' }} kg</span>
+      </div>
+    </div>
+  
+    @if (consommationPour100Km > 7) {
+      <p class="warning">⚠️ Attention, votre consommation est élevée.</p>
+    } @else if (consommationPour100Km < 4) {
+      <p class="success">✅ Félicitations, votre consommation est faible !</p>
+    }
+  
+    <button class="primary" (click)="ajouter100Km()">Ajouter +100 km</button>
+  
+    <h2>Liste des voyages</h2>
+  
+    @if (loadingVoyages) {
+      <p>Chargement des voyages...</p>
+    } @else {
+      <table>
+        <thead>
+          <tr>
+            <th>Distance</th>
+            <th>Conso. / 100 km</th>
+            <th>CO2 émis</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (voyage of voyages; track voyage) {
+            <tr>
+              <td>{{ voyage.distanceKm }} km</td>
+              <td>{{ voyage.consommationPour100Km }} L</td>
+              <td>{{ voyage.quantiteCO2 | number: '1.2-2' }} kg</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  
+    <button class="secondary" (click)="genererVoyage()">Générer un voyage aléatoire</button>
+  
+    <app-carbon-footprint-form></app-carbon-footprint-form>
+    <app-carbon-footprint-result></app-carbon-footprint-result>
+  </section>
+  

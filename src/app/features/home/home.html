@@ -1,0 +1,39 @@
+
+<h1 class="login-title-impact">Calculateur d'empreinte carbone</h1>
+
+<section class="login-container">
+  
+  <form (ngSubmit)="loginUser()" class="login-form" novalidate>
+
+    <fieldset class="fieldset">
+      <legend>Nom d'utilisateur</legend>
+      <input 
+      id="login" 
+      [(ngModel)]="login" 
+      name="login" 
+      placeholder="Entrez votre identifiant..." 
+      required />
+    </fieldset>
+
+    <fieldset class="fieldset">
+      <legend>Mot de passe</legend>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="Mot de passe fort requis"
+        required />
+    </fieldset>
+
+    <small (click)="showPassword = !showPassword" class="toggle-password">
+      {{ showPassword ? 'Cacher' : 'Afficher' }} le mot de passe
+    </small>
+    @if (error) {
+      <div class="error-message">{{ error }}</div>
+    }
+
+    <button type="submit" class="submit-btn">Se connecter</button>
+
+  </form>
+</section>

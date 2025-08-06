@@ -1,0 +1,34 @@
+<h2>Ajouter un voyage</h2>
+<form [formGroup]="form" class="form-container">
+  <label>Type de voyage</label>
+  <select formControlName="typeVoyage">
+    <option value="voiture">Voiture</option>
+    <option value="train">Train</option>
+    <option value="avion">Avion</option>
+  </select>
+
+  <label>Distance (km)</label>
+  <input type="number" formControlName="distanceKm" />
+  
+  @if (form.get('distanceKm')?.invalid && form.get('distanceKm')?.touched) {
+    <small>Distance requise (min. 1 km)</small>
+  }
+
+  @if (isVoiture) {
+    <label>Consommation/100 km (L)</label>
+    <input type="number" formControlName="consommationPour100Km" />
+    
+    @if (form.get('consommationPour100Km')?.invalid && form.get('consommationPour100Km')?.touched) {
+      <small>Requis pour les trajets en voiture</small>
+    }
+  }
+
+  <label>Date</label>
+  <input type="date" formControlName="date" />
+  
+  @if (form.get('date')?.invalid && form.get('date')?.touched) {
+    <small>Date requise</small>
+  }
+
+  <button type="button" (click)="addVoyage()" [disabled]="form.invalid">Ajouter</button>
+</form>

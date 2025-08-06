@@ -1,0 +1,9 @@
+@if (afficherHeader) {
+  <header class="header-container">
+    <h1 class="header-title">Bienvenue {{ nomUtilisateur }}</h1>
+    <div class="header-actions">
+      <button routerLink="/profile/{{ nomUtilisateur }}" class="btn-profile">Mon profil</button>
+      <button (click)="logout()" class="btn-logout">Déconnexion</button>
+    </div>
+  </header>
+}
