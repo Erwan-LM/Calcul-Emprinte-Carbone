@@ -1,0 +1,30 @@
+<p>Consommation totale : {{ consommationPour100Km * distanceKm / 100 | number:'1.2-2' }} L</p>
+<p [ngClass]="{'haute-distance': distanceKm > 500, 'basse-distance': distanceKm < 100}">Distance totale : {{ distanceKm
+    }} km</p>
+<p [ngStyle]="{'color': consommationPour100Km > 7 ? 'red' : consommationPour100Km < 4 ? 'green' : 'black'}">Consommation
+    pour 100 km : {{ consommationPour100Km | number:'1.2-2' }} L</p>
+<p>Quantité totale de CO2 : {{ quantiteCO2Totale | number:'1.2-2' }} kg</p>
+<p *ngIf="consommationPour100Km > 7">Attention, votre consommation est élevée</p>
+<p *ngIf="consommationPour100Km < 4">Félicitations, votre consommation est faible</p>
+<button (click)="ajouter100Km()">+100km</button>
+<h2>Liste des voyages</h2>
+<div *ngIf="loadingVoyages">Chargement des voyages en cours...</div>
+<table *ngIf="!loadingVoyages">
+    <thead>
+        <tr>
+            <th>Distance</th>
+            <th>Consommation pour 100 kms</th>
+            <th>Quantité de CO2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let voyage of voyages">
+            <td>{{ voyage.distanceKm }} km</td>
+            <td>{{ voyage.consommationPour100Km }} L</td>
+            <td>{{ voyage.quantiteCO2 | number:'1.2-2' }} kg</td>
+        </tr>
+    </tbody>
+</table>
+<button (click)="genererVoyage()">Générer voyage</button>
+<app-carbon-footprint-form></app-carbon-footprint-form>
+<app-carbon-footprint-result></app-carbon-footprint-result>
