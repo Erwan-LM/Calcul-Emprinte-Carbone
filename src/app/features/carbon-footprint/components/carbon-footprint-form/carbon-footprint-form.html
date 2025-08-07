@@ -1,34 +1,77 @@
-<h2>Ajouter un voyage</h2>
-<form [formGroup]="form" class="form-container">
-  <label>Type de voyage</label>
-  <select formControlName="typeVoyage">
-    <option value="voiture">Voiture</option>
-    <option value="train">Train</option>
-    <option value="avion">Avion</option>
-  </select>
+<section class="form-container-wrapper">
+  <h2 class="form-title">Ajouter un voyage</h2>
 
-  <label>Distance (km)</label>
-  <input type="number" formControlName="distanceKm" />
-  
-  @if (form.get('distanceKm')?.invalid && form.get('distanceKm')?.touched) {
-    <small>Distance requise (min. 1 km)</small>
-  }
+  <form [formGroup]="form" class="form-container">
+    <div [ngClass]="{ 'form-grid voiture': isVoiture, 'form-grid': !isVoiture }">
 
-  @if (isVoiture) {
-    <label>Consommation/100 km (L)</label>
-    <input type="number" formControlName="consommationPour100Km" />
-    
-    @if (form.get('consommationPour100Km')?.invalid && form.get('consommationPour100Km')?.touched) {
-      <small>Requis pour les trajets en voiture</small>
+      <div class="input-group type-voyage"
+           [class.focused]="selectFocused"
+           [class.has-value]="hasValue('typeVoyage')">
+        <label class="floating-label">Type de voyage</label>
+        <select formControlName="typeVoyage"
+                (focus)="onFocusChange('typeVoyage', true)"
+                (blur)="onFocusChange('typeVoyage', false)">
+          <option value="voiture">Voiture</option>
+          <option value="train">Train</option>
+          <option value="avion">Avion</option>
+        </select>
+      </div>
+
+      <div class="input-group distance"
+           [class.focused]="distanceFocused"
+           [class.has-value]="hasValue('distanceKm')">
+        <label class="floating-label">Distance (km)</label>
+        <input type="number"
+               formControlName="distanceKm"
+               (focus)="onFocusChange('distanceKm', true)"
+               (blur)="onFocusChange('distanceKm', false)">
+      @if (getFieldError('distanceKm')){
+        <small>
+          {{ getFieldError('distanceKm') }}
+        </small>
+      }
+      </div>
+
+      @if (isVoiture) {
+        <div class="input-group consommation"
+             [class.focused]="consommationFocused"
+             [class.has-value]="hasValue('consommationPour100Km')">
+          <label class="floating-label">Consommation/100 km (L)</label>
+          <input type="number"
+                 formControlName="consommationPour100Km"
+                 (focus)="onFocusChange('consommationPour100Km', true)"
+                 (blur)="onFocusChange('consommationPour100Km', false)">
+      @if (getFieldError('consommationPour100Km')){
+        <small>
+          {{ getFieldError('consommationPour100Km') }}
+        </small>
+          }
+        </div>
+      }
+      
+        <div class="input-group date"
+      [class.focused]="dateFocused"
+      [class.has-value]="hasValue('date')">
+      <label class="floating-label">Date</label>
+        <input type="date"
+              formControlName="date"
+              (focus)="onFocusChange('date', true)"
+              (blur)="onFocusChange('date', false)"
+              [attr.placeholder]="(dateFocused || hasValue('date')) ? '' : 'jj/mm/aaaa'">
+      @if (getFieldError('date')){
+      <small>
+        {{ getFieldError('date') }}
+      </small>
     }
-  }
+  </div>
 
-  <label>Date</label>
-  <input type="date" formControlName="date" />
-  
-  @if (form.get('date')?.invalid && form.get('date')?.touched) {
-    <small>Date requise</small>
-  }
 
-  <button type="button" (click)="addVoyage()" [disabled]="form.invalid">Ajouter</button>
-</form>
+    </div>
+
+    <button type="button"
+            (click)="addVoyage()"
+            [disabled]="form.invalid">
+      Ajouter
+    </button>
+  </form>
+</section>

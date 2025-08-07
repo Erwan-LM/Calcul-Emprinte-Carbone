@@ -1,0 +1,216 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Empreinte Carbone",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/calculerTrajetVoiture": {
+      "get": {
+        "summary": "Calculer empreinte carbone de voiture",
+        "parameters": [
+          {
+            "name": "consommationPour100Km",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "typeCarburant",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "distanceKm",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empreinte carbone calculée"
+          },
+          "400": {
+            "description": "Erreur"
+          }
+        }
+      }
+    },
+    "/calculerTrajetAvion": {
+      "get": {
+        "summary": "Calculer empreinte carbone d'avion",
+        "parameters": [
+          {
+            "name": "distanceKm",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empreinte carbone calculée"
+          },
+          "400": {
+            "description": "Erreur"
+          }
+        }
+      }
+    },
+    "/calculerTrajetTrain": {
+      "get": {
+        "summary": "Calculer empreinte carbone de train",
+        "parameters": [
+          {
+            "name": "distanceKm",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "typeCarburant",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empreinte carbone calculée"
+          },
+          "400": {
+            "description": "Erreur"
+          }
+        }
+      }
+    },
+    "/monEmpreinteCarbone": {
+      "get": {
+        "summary": "Obtenir empreinte carbone de l'utilisateur",
+        "parameters": [
+          {
+            "name": "idUtilisateur",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empreinte carbone obtenue"
+          },
+          "400": {
+            "description": "Erreur"
+          }
+        }
+      }
+    },
+    "/ajouterEmpreinteCarbone": {
+      "put": {
+        "summary": "Ajouter empreinte carbone à l'utilisateur",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idUtilisateur": {
+                    "type": "number"
+                  },
+                  "empreinteCarbone": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "idUtilisateur",
+                  "empreinteCarbone"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Empreinte carbone ajoutée"
+          },
+          "400": {
+            "description": "Erreur"
+          }
+        }
+      }
+    },
+    "/retirerEmpreinteCarbone": {
+      "put": {
+        "summary": "Retirer empreinte carbone de l'utilisateur",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idUtilisateur": {
+                    "type": "number"
+                  },
+                  "empreinteCarbone": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "idUtilisateur",
+                  "empreinteCarbone"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Empreinte carbone retirée"
+          },
+          "400": {
+            "description": "Erreur"
+          }
+        }
+      }
+    },
+    "/supprimerEmpreinteCarbone": {
+      "post": {
+        "summary": "Supprimer toute l'empreinte carbone de l'utilisateur",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idUtilisateur": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "idUtilisateur"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Toute l'empreinte carbone de l'utilisateur supprimée"
+          },
+          "400": {
+            "description": "Erreur"
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@
     <form (ngSubmit)="saveProfile()" class="profile-form">
   
       <div class="form-group">
-        <label for="username">Nom d'utilisateur</label>
+        <label for="username">Pseudo</label>
         <input id="username" [(ngModel)]="profile.username" name="username" placeholder="Entrez votre pseudo..." />
       </div>
   
@@ -33,5 +33,18 @@
       </div>
   
     </form>
+
+    <section class="empreinte-section">
+      <h2>Empreinte carbone</h2>
+      <p *ngIf="empreinteCarbone !== null">Votre empreinte actuelle est de <strong>{{ empreinteCarbone }} kg CO₂</strong></p>
+      <button type="button" (click)="resetEmpreinteCarbone()">Réinitialiser l'empreinte carbone</button>
+    
+      <form (ngSubmit)="diminuerEmpreinteCarbone()" class="form-diminuer">
+        <label for="diminuer">Diminuer de :</label>
+        <input type="number" id="diminuer" [(ngModel)]="diminution" name="diminution" min="1" required />
+        <button type="submit">Soumettre</button>
+      </form>
+    </section>
+    
   </section>
   

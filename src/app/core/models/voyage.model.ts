@@ -1,6 +1,8 @@
 export interface Voyage {
-    distanceKm: number;
-    consommationPour100Km: number;
-    quantiteCO2: number;
-    typeVoyage?: 'voiture' | 'avion' | 'train';
-  }
+  type: 'voiture' | 'train' | 'avion';
+  distanceKm: number;
+  consommationPour100Km?: number | undefined;
+  quantiteCO2: number;
+  date: string;
+  typeCarburant?: 'essence' | 'diesel' | 'electricite';
+}

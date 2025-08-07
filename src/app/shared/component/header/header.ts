@@ -6,8 +6,6 @@ import { Subject, takeUntil, filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -18,6 +16,7 @@ import { RouterModule } from '@angular/router';
 export class Header implements OnInit, OnDestroy {
   nomUtilisateur: string | null = null;
   afficherHeader = true;
+  isProfilePage = false;
 
   private router = inject(Router);
   private userService = inject(UserService);
@@ -38,14 +37,35 @@ export class Header implements OnInit, OnDestroy {
       )
       .subscribe((event: NavigationEnd) => {
         this.afficherHeader = event.url !== '/' && event.url !== '/home';
+        this.isProfilePage = event.url.startsWith('/profile');
       });
   }
 
-  logout(): void {
+  goToProfile(): void {
+    if (this.nomUtilisateur) {
+      this.router.navigate(['/profile', this.nomUtilisateur]);
+    }
+  }
+
+  goToSummary(): void {
+    this.router.navigate(['/summary']);
+  }
+
+  isConnected = true;
+hasLoggedOut = false;
+
+logout(): void {
+  this.isConnected = false;
+  this.hasLoggedOut = true;
+
+  setTimeout(() => {
     this.authService.logout();
     this.userService.clearProfile();
     this.router.navigate(['/home']);
-  }
+    this.hasLoggedOut = false;
+  }, 2000);
+}
+
 
   ngOnDestroy(): void {
     this.destroy$.next();

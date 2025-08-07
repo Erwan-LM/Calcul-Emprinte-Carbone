@@ -8,6 +8,7 @@ import { ProfileGuard } from './core/guard/profil.guard';
 
 export const appRoutes: Routes = [
   { path: '', component: Home },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
   { path: 'summary', component: Summary, canActivate: [AuthGuard] },
   { path: 'profile/:username', component: Profile, canActivate: [AuthGuard, ProfileGuard] }
 ];

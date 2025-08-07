@@ -11,10 +11,38 @@
   z-index: 100;
 }
 
-.header-title {
-  font-size: 1.6rem;
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: #f0f0f0;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.status-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.status-dot.connected {
+  background-color: #3aff3a;
+  box-shadow: 0 0 8px #3aff3a;
+}
+
+.status-dot.disconnected {
+  background-color: #ff4b4b;
+  box-shadow: 0 0 8px #ff4b4b;
+}
+
+.username {
+  font-weight: 600;
+  color: #f8f8f8;
 }
 
 .header-actions {
@@ -22,6 +50,8 @@
   gap: 1rem;
 }
 
+/* Boutons inchangés, conservés */
+.btn-accueil,
 .btn-profile,
 .btn-logout {
   padding: 0.6rem 1.4rem;
@@ -33,11 +63,13 @@
   transition: all 0.3s ease;
 }
 
+.btn-accueil,
 .btn-profile {
   background-color: #ff7c57;
   color: #fff;
 }
 
+.btn-accueil:hover,
 .btn-profile:hover {
   background-color: #ff956c;
 }
@@ -51,4 +83,16 @@
 .btn-logout:hover {
   background-color: #ff7c57;
   color: #121212;
+}
+
+/* Animation légère */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,8 +1,25 @@
 @if (afficherHeader) {
   <header class="header-container">
-    <h1 class="header-title">Bienvenue {{ nomUtilisateur }}</h1>
+    <div class="user-info">
+      @if (nomUtilisateur) {
+        <span class="status-dot" [ngClass]="{ 'connected': isConnected, 'disconnected': !isConnected && hasLoggedOut }"></span>
+        <span class="username">{{ nomUtilisateur }}</span>
+      }
+    </div>
+
     <div class="header-actions">
-      <button routerLink="/profile/{{ nomUtilisateur }}" class="btn-profile">Mon profil</button>
+      @if (isProfilePage) {
+        <button (click)="goToSummary()" class="btn-accueil" aria-label="Retour à l'accueil">
+          ← Accueil
+        </button>
+      } @else {
+        @if (nomUtilisateur) {
+          <button (click)="goToProfile()" class="btn-profile">
+            Mon profil
+          </button>
+        }
+      }
+
       <button (click)="logout()" class="btn-logout">Déconnexion</button>
     </div>
   </header>

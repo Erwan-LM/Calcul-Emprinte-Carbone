@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked, AfterContentInit, AfterContentChecked } from '@angular/core';
 import { CarbonFootprintComputeService } from '../../core/service/carbon-footprint-compute.service';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CarbonFootprintForm } from './components/carbon-footprint-form/carbon-footprint-form';
 import { CarbonFootprintResult } from './components/carbon-footprint-result/carbon-footprint-result';
@@ -41,12 +40,17 @@ export class CarbonFootprint implements OnInit, OnDestroy, AfterViewInit, AfterV
   }
 
   async genererVoyage(): Promise<void> {
+    const types: ('voiture' | 'train' | 'avion')[] = ['voiture', 'train', 'avion'];
     const distance = Math.floor(Math.random() * 1000) + 1;
     const consommation = Math.floor(Math.random() * 10) + 1;
-    await this.carbonService.addVoyage({ distanceKm: distance, consommationPour100Km: consommation });
+    const type = types[Math.floor(Math.random() * types.length)];
+    const date = new Date().toISOString().split('T')[0];
+  
+    await this.carbonService.addVoyage({ distanceKm: distance, consommationPour100Km: consommation, type, date });
     this.voyages = await this.carbonService.getVoyages();
     await this.calculerTotalEtMoyenne();
-  }
+  }  
+  
 
   async calculerTotalEtMoyenne(): Promise<void> {
     const resume = await this.carbonService.getResumeVoyages();

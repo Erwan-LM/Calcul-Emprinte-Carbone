@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserService } from '../service/user.service';
 
 @Injectable({
@@ -9,20 +9,21 @@ export class ProfileGuard implements CanActivate {
 
   constructor(private userService: UserService, private router: Router) {}
 
-  canActivate(): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const profile = this.userService.getCurrentProfile();
+    const usernameParam = route.params['username'];
   
-    if (
-      profile &&
-      profile.username &&
-      profile.firstName &&
-      profile.lastName &&
-      profile.email
-    ) {
-      return true;
-    } else {
-      this.router.navigate(['/profile']);
+    if (!profile || !profile.username) {
+      this.router.navigate(['/home']);
       return false;
     }
-  }  
-}
+  
+    if (usernameParam !== profile.username) {
+      this.router.navigate(['/profile', profile.username]);
+      return false;
+    }
+  
+    return true;
+  }
+}  
+
